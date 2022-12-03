@@ -99,7 +99,11 @@ func findTitleText(node *html.Node, title *string) {
 func FetchTitleText(link *Link, Index int) {
 	fmt.Println(strconv.Itoa(Index)+" - Request URL: ", link.URL)
 
-	res, err := http.Get(link.URL)
+	client := http.Client{
+		Timeout: 10 * time.Second,
+	}
+
+	res, err := client.Get(link.URL)
 	if err != nil {
 		fmt.Println("ERROR: ", err)
 		return
